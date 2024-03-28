@@ -7,7 +7,7 @@ import {
 function registrarEventosInicio(socket, io){
     socket.on("obter_documentos", async (devolverDocumentos) => {
         const documentos = await obterDocumentos();
-    
+        
         devolverDocumentos(documentos);
       });
     

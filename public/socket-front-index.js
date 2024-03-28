@@ -4,7 +4,7 @@ const socket = io();
 
 socket.emit("obter_documentos", (documentos) => {
   documentos.forEach((documento) => {
-    inserirLinkDocumento(documento.nome);
+    inserirLinkDocumento(documento.titulo);
   });
 });
 
