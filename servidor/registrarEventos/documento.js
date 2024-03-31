@@ -3,14 +3,20 @@ import {
     encontrarDocumento,
     excluirDocumento,
 } from "../db/documentosDb.js";
+import { adicionarConexao, obterUsuariosDocumento } from "../utils/conexoesDocumentos.js";
 
 function registrarEventosDocumento(socket, io){
-    socket.on("selecionar_documento", async (nomeDocumento, devolverTexto) => {
-        socket.join(nomeDocumento);
-    
-        const documento = await encontrarDocumento(nomeDocumento);
-    
-        if (documento) {
+    socket.on("selecionar_documento", async ({nomeDocumento, usuario}, devolverTexto) => {
+      
+      const documento = await encontrarDocumento(nomeDocumento);
+      
+      if (documento) {
+          socket.join(nomeDocumento);
+          adicionarConexao({ nomeDocumento, usuario });
+          const usuariosNoDocumento = obterUsuariosDocumento(nomeDocumento);
+          
+          io.to(nomeDocumento).emit("usuarios_no_documento", usuariosNoDocumento);
+
           devolverTexto(documento.texto);
         }
     });

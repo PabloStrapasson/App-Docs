@@ -7,7 +7,7 @@ function obterDocumentos() {
 
 function adicionarDocumento(nome) {
   const resultado = documentosColecao.insertOne({
-    nome,
+    titulo: nome,
     texto: "",
   });
 
@@ -16,7 +16,7 @@ function adicionarDocumento(nome) {
 
 function encontrarDocumento(nome) {
   const documento = documentosColecao.findOne({
-    nome,
+    titulo: nome,
   });
 
   return documento;
@@ -25,7 +25,7 @@ function encontrarDocumento(nome) {
 function atualizaDocumento(nome, texto) {
   const atualizacao = documentosColecao.updateOne(
     {
-      nome,
+      titulo: nome,
     },
     {
       $set: {
@@ -39,7 +39,7 @@ function atualizaDocumento(nome, texto) {
 
 function excluirDocumento(nome) {
   const resultado = documentosColecao.deleteOne({
-    nome,
+    titulo: nome,
   });
 
   return resultado;
